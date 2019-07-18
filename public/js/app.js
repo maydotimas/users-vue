@@ -1738,6 +1738,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
+    axios.get('/api/user').then(function (response) {
+      console.log(response.data);
+    });
   }
 });
 
@@ -52215,8 +52218,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/may/sites/users/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/may/sites/users/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/may/sites/users-vue/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/may/sites/users-vue/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
