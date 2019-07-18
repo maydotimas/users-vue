@@ -1972,6 +1972,82 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   /*
    * The component's data.
@@ -39023,7 +39099,7 @@ var render = function() {
         _vm.clients.length === 0
           ? _c("p", { staticClass: "mb-0" }, [
               _vm._v(
-                "\n                You have not created any OAuth clients.\n            "
+                "\n                No user data to display at the moment.\n            "
               )
             ])
           : _vm._e(),
@@ -39038,17 +39114,17 @@ var render = function() {
                   return _c("tr", [
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _vm._v(
-                        "\n                            " +
+                        "\n                        " +
                           _vm._s(client.id) +
-                          "\n                        "
+                          "\n                    "
                       )
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _vm._v(
-                        "\n                            " +
+                        "\n                        " +
                           _vm._s(client.name) +
-                          "\n                        "
+                          "\n                    "
                       )
                     ]),
                     _vm._v(" "),
@@ -39070,7 +39146,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                Edit\n                            "
+                            "\n                            Edit\n                        "
                           )
                         ]
                       )
@@ -39089,7 +39165,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                Delete\n                            "
+                            "\n                            Delete\n                        "
                           )
                         ]
                       )
@@ -39140,7 +39216,7 @@ var render = function() {
               _c("form", { attrs: { role: "form" } }, [
                 _c("div", { staticClass: "form-group row" }, [
                   _c("label", { staticClass: "col-md-3 col-form-label" }, [
-                    _vm._v("Name")
+                    _vm._v("First Name")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-9" }, [
@@ -39149,64 +39225,17 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.createForm.name,
-                          expression: "createForm.name"
+                          value: _vm.createForm.first_name,
+                          expression: "createForm.first_name"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "create-client-name", type: "text" },
-                      domProps: { value: _vm.createForm.name },
-                      on: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.store($event)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.createForm, "name", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }, [
-                      _vm._v(
-                        "\n                                    Something your users will recognize and trust.\n                                "
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
-                    _vm._v("Redirect URL")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-9" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.createForm.redirect,
-                          expression: "createForm.redirect"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", name: "redirect" },
-                      domProps: { value: _vm.createForm.redirect },
+                      attrs: {
+                        id: "create-user-first-name",
+                        type: "text",
+                        name: "first_name"
+                      },
+                      domProps: { value: _vm.createForm.first_name },
                       on: {
                         keyup: function($event) {
                           if (
@@ -39229,18 +39258,432 @@ var render = function() {
                           }
                           _vm.$set(
                             _vm.createForm,
-                            "redirect",
+                            "first_name",
                             $event.target.value
                           )
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }, [
-                      _vm._v(
-                        "\n                                    Your application's authorization callback URL.\n                                "
-                      )
-                    ])
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Last Name")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createForm.last_name,
+                          expression: "createForm.last_name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "create-user-last-name",
+                        type: "text",
+                        name: "last_name"
+                      },
+                      domProps: { value: _vm.createForm.last_name },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.store($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createForm,
+                            "last_name",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Address")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createForm.address,
+                          expression: "createForm.address"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "create-user-address",
+                        type: "text",
+                        name: "address"
+                      },
+                      domProps: { value: _vm.createForm.address },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.store($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createForm,
+                            "address",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Post Code")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createForm.post_code,
+                          expression: "createForm.post_code"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "create-user-post-code",
+                        type: "text",
+                        name: "post_code"
+                      },
+                      domProps: { value: _vm.createForm.post_code },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.store($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createForm,
+                            "post_code",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Phone Number")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createForm.phone_number,
+                          expression: "createForm.phone_number"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "create-user-phone-number",
+                        name: "phone-number"
+                      },
+                      domProps: { value: _vm.createForm.phone_number },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.store($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createForm,
+                            "phone_number",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Email")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createForm.email,
+                          expression: "createForm.email"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "create-user-email",
+                        name: "email"
+                      },
+                      domProps: { value: _vm.createForm.email },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.store($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.createForm, "email", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Username")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createForm.username,
+                          expression: "createForm.username"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "create-user-username",
+                        name: "username"
+                      },
+                      domProps: { value: _vm.createForm.username },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.store($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createForm,
+                            "username",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Password")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createForm.password,
+                          expression: "createForm.password"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "create-user-password",
+                        name: "password"
+                      },
+                      domProps: { value: _vm.createForm.password },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.store($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createForm,
+                            "password",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Password Confirm")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.createForm.password_confirm,
+                          expression: "createForm.password_confirm"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "create-user-password-confirm",
+                        name: "password_confirmation"
+                      },
+                      domProps: { value: _vm.createForm.password_confirm },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.store($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.createForm,
+                            "password_confirm",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
                   ])
                 ])
               ])
@@ -53282,8 +53725,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/may/sites/users-vue/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/may/sites/users-vue/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/may/sites/users/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/may/sites/users/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

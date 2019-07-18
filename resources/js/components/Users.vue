@@ -22,54 +22,54 @@
             <div class="card-body">
                 <!-- Current Clients -->
                 <p class="mb-0" v-if="clients.length === 0">
-                    You have not created any OAuth clients.
+                    No user data to display at the moment.
                 </p>
 
                 <table class="table table-borderless mb-0" v-if="clients.length > 0">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Post Code</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
-                            <th>Username</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Post Code</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                     </thead>
 
                     <tbody>
-                        <tr v-for="client in clients">
-                            <!-- ID -->
-                            <td style="vertical-align: middle;">
-                                {{ client.id }}
-                            </td>
+                    <tr v-for="client in clients">
+                        <!-- ID -->
+                        <td style="vertical-align: middle;">
+                            {{ client.id }}
+                        </td>
 
-                            <!-- Name -->
-                            <td style="vertical-align: middle;">
-                                {{ client.name }}
-                            </td>
+                        <!-- Name -->
+                        <td style="vertical-align: middle;">
+                            {{ client.name }}
+                        </td>
 
-                            <!-- Secret -->
-                            <td style="vertical-align: middle;">
-                                <code>{{ client.secret }}</code>
-                            </td>
+                        <!-- Secret -->
+                        <td style="vertical-align: middle;">
+                            <code>{{ client.secret }}</code>
+                        </td>
 
-                            <!-- Edit Button -->
-                            <td style="vertical-align: middle;">
-                                <a class="action-link" tabindex="-1" @click="edit(client)">
-                                    Edit
-                                </a>
-                            </td>
+                        <!-- Edit Button -->
+                        <td style="vertical-align: middle;">
+                            <a class="action-link" tabindex="-1" @click="edit(client)">
+                                Edit
+                            </a>
+                        </td>
 
-                            <!-- Delete Button -->
-                            <td style="vertical-align: middle;">
-                                <a class="action-link text-danger" @click="destroy(client)">
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
+                        <!-- Delete Button -->
+                        <td style="vertical-align: middle;">
+                            <a class="action-link text-danger" @click="destroy(client)">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -99,33 +99,109 @@
                             </ul>
                         </div>
 
-                        <!-- Create Client Form -->
+                        <!-- Create User Form -->
                         <form role="form">
-                            <!-- Name -->
+                            <!-- First Name -->
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label">Name</label>
+                                <label class="col-md-3 col-form-label">First Name</label>
 
                                 <div class="col-md-9">
-                                    <input id="create-client-name" type="text" class="form-control"
-                                                                @keyup.enter="store" v-model="createForm.name">
+                                    <input id="create-user-first-name" type="text" class="form-control"
+                                           name="first_name"
+                                           @keyup.enter="store" v-model="createForm.first_name">
 
-                                    <span class="form-text text-muted">
-                                        Something your users will recognize and trust.
-                                    </span>
+                                </div>
+                            </div>
+                            <!-- Last Name -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Last Name</label>
+
+                                <div class="col-md-9">
+                                    <input id="create-user-last-name" type="text" class="form-control"
+                                           name="last_name"
+                                           @keyup.enter="store" v-model="createForm.last_name">
+
                                 </div>
                             </div>
 
-                            <!-- Redirect URL -->
+                            <!-- Address -->
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label">Redirect URL</label>
+                                <label class="col-md-3 col-form-label">Address</label>
 
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="redirect"
-                                                    @keyup.enter="store" v-model="createForm.redirect">
+                                    <input id="create-user-address" type="text" class="form-control"
+                                           name="address"
+                                           @keyup.enter="store" v-model="createForm.address">
 
-                                    <span class="form-text text-muted">
-                                        Your application's authorization callback URL.
-                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Post Code -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Post Code</label>
+
+                                <div class="col-md-9">
+                                    <input id="create-user-post-code" type="text" class="form-control"
+                                           name="post_code"
+                                           @keyup.enter="store" v-model="createForm.post_code">
+
+                                </div>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Phone Number</label>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="create-user-phone-number" class="form-control"
+                                           name="phone-number"
+                                           @keyup.enter="store" v-model="createForm.phone_number">
+
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Email</label>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="create-user-email" class="form-control"
+                                           name="email"
+                                           @keyup.enter="store" v-model="createForm.email">
+
+                                </div>
+                            </div>
+                            <!-- Username -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Username</label>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="create-user-username" class="form-control"
+                                           name="username"
+                                           @keyup.enter="store" v-model="createForm.username">
+
+                                </div>
+                            </div>
+                            <!-- Password -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Password</label>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="create-user-password" class="form-control"
+                                           name="password"
+                                           @keyup.enter="store" v-model="createForm.password">
+
+                                </div>
+                            </div>
+                            <!-- Password -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Password Confirm</label>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="create-user-password-confirm" class="form-control"
+                                           name="password_confirmation"
+                                           @keyup.enter="store" v-model="createForm.password_confirm">
+
                                 </div>
                             </div>
                         </form>
@@ -175,7 +251,7 @@
 
                                 <div class="col-md-9">
                                     <input id="edit-client-name" type="text" class="form-control"
-                                                                @keyup.enter="update" v-model="editForm.name">
+                                           @keyup.enter="update" v-model="editForm.name">
 
                                     <span class="form-text text-muted">
                                         Something your users will recognize and trust.
@@ -189,7 +265,7 @@
 
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" name="redirect"
-                                                    @keyup.enter="update" v-model="editForm.redirect">
+                                           @keyup.enter="update" v-model="editForm.redirect">
 
                                     <span class="form-text text-muted">
                                         Your application's authorization callback URL.
@@ -271,9 +347,9 @@
              */
             getClients() {
                 axios.get('/oauth/clients')
-                        .then(response => {
-                            this.clients = response.data;
-                        });
+                    .then(response => {
+                        this.clients = response.data;
+                    });
             },
 
             /**
@@ -344,9 +420,9 @@
              */
             destroy(client) {
                 axios.delete('/oauth/clients/' + client.id)
-                        .then(response => {
-                            this.getClients();
-                        });
+                    .then(response => {
+                        this.getClients();
+                    });
             }
         }
     }
