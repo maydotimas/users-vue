@@ -2132,21 +2132,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
-function initialState() {
-  return {
-    errors: [],
-    first_name: '',
-    last_name: '',
-    address: '',
-    post_code: '',
-    contact_phone_number: '',
-    email: '',
-    username: '',
-    password: '',
-    password_confirmation: ''
-  };
-}
-
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   /*
    * The component's data.
@@ -2154,6 +2147,7 @@ function initialState() {
   data: function data() {
     return {
       users: [],
+      selected_users: [],
       createForm: {
         errors: [],
         first_name: '',
@@ -2295,6 +2289,21 @@ function initialState() {
 
       axios["delete"]('/api/users/' + user.id + '/delete').then(function (response) {
         _this3.getUsers();
+      });
+    },
+
+    /**
+     * Destroy the multiple client.
+     */
+    destroy_multiple: function destroy_multiple() {
+      var _this4 = this;
+
+      axios["delete"]('/api/users/multiple-delete', {
+        data: {
+          ids: this.selected_users
+        }
+      }).then(function (response) {
+        _this4.getUsers();
       });
     }
   }
@@ -39239,6 +39248,48 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.users, function(user) {
                   return _c("tr", [
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selected_users,
+                            expression: "selected_users"
+                          }
+                        ],
+                        attrs: { type: "checkbox" },
+                        domProps: {
+                          value: user.id,
+                          checked: Array.isArray(_vm.selected_users)
+                            ? _vm._i(_vm.selected_users, user.id) > -1
+                            : _vm.selected_users
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.selected_users,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = user.id,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.selected_users = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.selected_users = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.selected_users = $$c
+                            }
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _vm._v(
                         "\n                        " +
@@ -39335,6 +39386,15 @@ var render = function() {
           : _vm._e()
       ])
     ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary mt-10",
+        on: { click: _vm.destroy_multiple }
+      },
+      [_vm._v("Delete")]
+    ),
     _vm._v(" "),
     _c(
       "div",

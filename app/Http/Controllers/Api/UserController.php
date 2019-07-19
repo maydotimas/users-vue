@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\User;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Post
  *
  * @mixin Eloquent
  */
-
 class UserController extends Controller
 {
     public function get_user_list()
@@ -29,20 +29,29 @@ class UserController extends Controller
     public function edit(UpdateUserRequest $request, $id)
     {
         $user = User::find($id);
-        if(!$user){
+        if (!$user) {
             return response('User not found', 200);
-        }else{
+        } else {
             $user->update($request->all());
             return response('User updated', 200);
         }
     }
-    public function delete($id){
+
+    public function delete($id)
+    {
         $user = User::find($id);
-        if(!$user){
+        if (!$user) {
             return response('User not found', 200);
-        }else{
+        } else {
             $user->delete();
             return response('User deleted', 200);
         }
+    }
+
+    public function multiple_delete(Request $request)
+    {
+        $ids = array_flatten($request->all());
+        User::destroy($ids);
+        return response('User deleted', 200);
     }
 }

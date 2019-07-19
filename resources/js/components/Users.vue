@@ -20,6 +20,7 @@
             </div>
 
             <div class="card-body">
+
                 <!-- Current Users -->
                 <p class="mb-0" v-if="users.length === 0">
                     No user data to display at the moment.
@@ -41,6 +42,9 @@
 
                     <tbody>
                     <tr v-for="user in users">
+                        <td>
+                            <input type="checkbox" v-bind:value="user.id" v-model="selected_users">
+                        </td>
                         <!-- ID -->
                         <td style="vertical-align: middle;">
                             {{ user.id }}
@@ -80,8 +84,12 @@
                     </tr>
                     </tbody>
                 </table>
+
+
             </div>
         </div>
+
+        <button class="btn btn-primary mt-10" @click="destroy_multiple">Delete</button>
 
         <!-- Create Client Modal -->
         <div class="modal fade" id="modal-create-user" tabindex="-1" role="dialog">
@@ -374,20 +382,6 @@
 </template>
 
 <script>
-    function initialState() {
-        return {
-            errors: [],
-            first_name: '',
-            last_name: '',
-            address: '',
-            post_code: '',
-            contact_phone_number: '',
-            email: '',
-            username: '',
-            password: '',
-            password_confirmation: ''
-        };
-    }
 
     export default {
         /*
@@ -396,6 +390,7 @@
         data() {
             return {
                 users: [],
+                selected_users:[],
 
                 createForm: {
                     errors: [],
@@ -500,6 +495,7 @@
                 $('#modal-edit-user').modal('show');
             },
 
+
             /**
              * Update the client being edited.
              */
@@ -547,6 +543,17 @@
              */
             destroy(user) {
                 axios.delete('/api/users/' + user.id + '/delete')
+                    .then(response => {
+                        this.getUsers();
+                    });
+            },
+
+            /**
+             * Destroy the multiple client.
+             */
+            destroy_multiple() {
+                axios.delete('/api/users/multiple-delete',
+                    { data: { ids: this.selected_users} })
                     .then(response => {
                         this.getUsers();
                     });
