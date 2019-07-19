@@ -2048,22 +2048,136 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+function initialState() {
+  return {
+    errors: [],
+    first_name: '',
+    last_name: '',
+    address: '',
+    post_code: '',
+    contact_phone_number: '',
+    email: '',
+    username: '',
+    password: '',
+    password_confirmation: ''
+  };
+}
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   /*
    * The component's data.
    */
   data: function data() {
     return {
-      clients: [],
+      users: [],
       createForm: {
         errors: [],
-        name: '',
-        redirect: ''
+        first_name: '',
+        last_name: '',
+        address: '',
+        post_code: '',
+        contact_phone_number: '',
+        email: '',
+        username: '',
+        password: '',
+        password_confirmation: ''
       },
       editForm: {
         errors: [],
-        name: '',
-        redirect: ''
+        id: '',
+        first_name: '',
+        last_name: '',
+        address: '',
+        post_code: '',
+        contact_phone_number: '',
+        email: '',
+        username: '',
+        password: '',
+        password_confirmation: ''
       }
     };
   },
@@ -2086,11 +2200,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
      * Prepare the component.
      */
     prepareComponent: function prepareComponent() {
-      this.getClients();
-      $('#modal-create-client').on('shown.bs.modal', function () {
+      this.getUsers();
+      $('#modal-create-user').on('shown.bs.modal', function () {
         $('#create-client-name').focus();
       });
-      $('#modal-edit-client').on('shown.bs.modal', function () {
+      $('#modal-edit-user').on('shown.bs.modal', function () {
         $('#edit-client-name').focus();
       });
     },
@@ -2098,57 +2212,70 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     /**
      * Get all of the OAuth clients for the user.
      */
-    getClients: function getClients() {
+    getUsers: function getUsers() {
       var _this = this;
 
-      axios.get('/oauth/clients').then(function (response) {
-        _this.clients = response.data;
+      axios.get('/api/users').then(function (response) {
+        _this.users = response.data;
       });
     },
 
     /**
      * Show the form for creating new clients.
      */
-    showCreateClientForm: function showCreateClientForm() {
-      $('#modal-create-client').modal('show');
+    showCreateUserForm: function showCreateUserForm() {
+      $('#modal-create-user').modal('show');
     },
 
     /**
      * Create a new OAuth client for the user.
      */
     store: function store() {
-      this.persistClient('post', '/oauth/clients', this.createForm, '#modal-create-client');
+      this.persistUser('post', '/api/users', this.createForm, '#modal-create-user');
     },
 
     /**
      * Edit the given client.
      */
-    edit: function edit(client) {
-      this.editForm.id = client.id;
-      this.editForm.name = client.name;
-      this.editForm.redirect = client.redirect;
-      $('#modal-edit-client').modal('show');
+    edit: function edit(user) {
+      this.editForm.id = user.id;
+      this.editForm.first_name = user.first_name;
+      this.editForm.last_name = user.last_name;
+      this.editForm.address = user.address;
+      this.editForm.post_code = user.post_code;
+      this.editForm.contact_phone_number = user.contact_phone_number;
+      this.editForm.email = user.email;
+      this.editForm.username = user.username;
+      this.editForm.password = user.password;
+      $('#modal-edit-user').modal('show');
     },
 
     /**
      * Update the client being edited.
      */
     update: function update() {
-      this.persistClient('put', '/oauth/clients/' + this.editForm.id, this.editForm, '#modal-edit-client');
+      this.persistUser('put', '/api/users/' + this.editForm.id + '/update', this.editForm, '#modal-edit-user');
     },
 
     /**
      * Persist the client to storage using the given form.
      */
-    persistClient: function persistClient(method, uri, form, modal) {
+    persistUser: function persistUser(method, uri, form, modal) {
       var _this2 = this;
 
       form.errors = [];
       axios[method](uri, form).then(function (response) {
-        _this2.getClients();
+        _this2.getUsers();
 
-        form.name = '';
-        form.redirect = '';
+        form.first_name = '';
+        form.last_name = '';
+        form.address = '';
+        form.post_code = '';
+        form.contact_phone_number = '';
+        form.email = '';
+        form.username = '';
+        form.password = '';
+        form.password_confirmation = '';
         form.errors = [];
         $(modal).modal('hide');
       })["catch"](function (error) {
@@ -2163,11 +2290,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     /**
      * Destroy the given client.
      */
-    destroy: function destroy(client) {
+    destroy: function destroy(user) {
       var _this3 = this;
 
-      axios["delete"]('/oauth/clients/' + client.id).then(function (response) {
-        _this3.getClients();
+      axios["delete"]('/api/users/' + user.id + '/delete').then(function (response) {
+        _this3.getUsers();
       });
     }
   }
@@ -39083,7 +39210,7 @@ var render = function() {
               {
                 staticClass: "action-link",
                 attrs: { tabindex: "-1" },
-                on: { click: _vm.showCreateClientForm }
+                on: { click: _vm.showCreateUserForm }
               },
               [
                 _vm._v(
@@ -39096,7 +39223,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
-        _vm.clients.length === 0
+        _vm.users.length === 0
           ? _c("p", { staticClass: "mb-0" }, [
               _vm._v(
                 "\n                No user data to display at the moment.\n            "
@@ -39104,18 +39231,18 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm.clients.length > 0
+        _vm.users.length > 0
           ? _c("table", { staticClass: "table table-borderless mb-0" }, [
               _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.clients, function(client) {
+                _vm._l(_vm.users, function(user) {
                   return _c("tr", [
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _vm._v(
                         "\n                        " +
-                          _vm._s(client.id) +
+                          _vm._s(user.id) +
                           "\n                    "
                       )
                     ]),
@@ -39123,13 +39250,43 @@ var render = function() {
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _vm._v(
                         "\n                        " +
-                          _vm._s(client.name) +
+                          _vm._s(user.first_name) +
+                          " " +
+                          _vm._s(user.last_name) +
                           "\n                    "
                       )
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
-                      _c("code", [_vm._v(_vm._s(client.secret))])
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(user.post_code) +
+                          "\n                    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { "vertical-align": "middle" } }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(user.contact_phone_number) +
+                          "\n                    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { "vertical-align": "middle" } }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(user.email) +
+                          "\n                    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { "vertical-align": "middle" } }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(user.username) +
+                          "\n                    "
+                      )
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
@@ -39140,7 +39297,7 @@ var render = function() {
                           attrs: { tabindex: "-1" },
                           on: {
                             click: function($event) {
-                              return _vm.edit(client)
+                              return _vm.edit(user)
                             }
                           }
                         },
@@ -39159,7 +39316,7 @@ var render = function() {
                           staticClass: "action-link text-danger",
                           on: {
                             click: function($event) {
-                              return _vm.destroy(client)
+                              return _vm.destroy(user)
                             }
                           }
                         },
@@ -39183,7 +39340,7 @@ var render = function() {
       "div",
       {
         staticClass: "modal fade",
-        attrs: { id: "modal-create-client", tabindex: "-1", role: "dialog" }
+        attrs: { id: "modal-create-user", tabindex: "-1", role: "dialog" }
       },
       [
         _c("div", { staticClass: "modal-dialog" }, [
@@ -39437,17 +39594,17 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.createForm.phone_number,
-                          expression: "createForm.phone_number"
+                          value: _vm.createForm.contact_phone_number,
+                          expression: "createForm.contact_phone_number"
                         }
                       ],
                       staticClass: "form-control",
                       attrs: {
                         type: "text",
                         id: "create-user-phone-number",
-                        name: "phone-number"
+                        name: "contact_phone_number"
                       },
-                      domProps: { value: _vm.createForm.phone_number },
+                      domProps: { value: _vm.createForm.contact_phone_number },
                       on: {
                         keyup: function($event) {
                           if (
@@ -39470,7 +39627,7 @@ var render = function() {
                           }
                           _vm.$set(
                             _vm.createForm,
-                            "phone_number",
+                            "contact_phone_number",
                             $event.target.value
                           )
                         }
@@ -39598,7 +39755,7 @@ var render = function() {
                       ],
                       staticClass: "form-control",
                       attrs: {
-                        type: "text",
+                        type: "password",
                         id: "create-user-password",
                         name: "password"
                       },
@@ -39645,17 +39802,17 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.createForm.password_confirm,
-                          expression: "createForm.password_confirm"
+                          value: _vm.createForm.password_confirmation,
+                          expression: "createForm.password_confirmation"
                         }
                       ],
                       staticClass: "form-control",
                       attrs: {
-                        type: "text",
+                        type: "password",
                         id: "create-user-password-confirm",
                         name: "password_confirmation"
                       },
-                      domProps: { value: _vm.createForm.password_confirm },
+                      domProps: { value: _vm.createForm.password_confirmation },
                       on: {
                         keyup: function($event) {
                           if (
@@ -39678,7 +39835,7 @@ var render = function() {
                           }
                           _vm.$set(
                             _vm.createForm,
-                            "password_confirm",
+                            "password_confirmation",
                             $event.target.value
                           )
                         }
@@ -39722,7 +39879,7 @@ var render = function() {
       "div",
       {
         staticClass: "modal fade",
-        attrs: { id: "modal-edit-client", tabindex: "-1", role: "dialog" }
+        attrs: { id: "modal-edit-user", tabindex: "-1", role: "dialog" }
       },
       [
         _c("div", { staticClass: "modal-dialog" }, [
@@ -39755,7 +39912,7 @@ var render = function() {
               _c("form", { attrs: { role: "form" } }, [
                 _c("div", { staticClass: "form-group row" }, [
                   _c("label", { staticClass: "col-md-3 col-form-label" }, [
-                    _vm._v("Name")
+                    _vm._v("First Name")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-9" }, [
@@ -39764,64 +39921,17 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.editForm.name,
-                          expression: "editForm.name"
+                          value: _vm.editForm.first_name,
+                          expression: "editForm.first_name"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "edit-client-name", type: "text" },
-                      domProps: { value: _vm.editForm.name },
-                      on: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.update($event)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.editForm, "name", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }, [
-                      _vm._v(
-                        "\n                                    Something your users will recognize and trust.\n                                "
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
-                    _vm._v("Redirect URL")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-9" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.editForm.redirect,
-                          expression: "editForm.redirect"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", name: "redirect" },
-                      domProps: { value: _vm.editForm.redirect },
+                      attrs: {
+                        id: "edit-user-first-name",
+                        type: "text",
+                        name: "first_name"
+                      },
+                      domProps: { value: _vm.editForm.first_name },
                       on: {
                         keyup: function($event) {
                           if (
@@ -39844,18 +39954,428 @@ var render = function() {
                           }
                           _vm.$set(
                             _vm.editForm,
-                            "redirect",
+                            "first_name",
                             $event.target.value
                           )
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }, [
-                      _vm._v(
-                        "\n                                    Your application's authorization callback URL.\n                                "
-                      )
-                    ])
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Last Name")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editForm.last_name,
+                          expression: "editForm.last_name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "edit-user-last-name",
+                        type: "text",
+                        name: "last_name"
+                      },
+                      domProps: { value: _vm.editForm.last_name },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.update($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editForm,
+                            "last_name",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Address")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editForm.address,
+                          expression: "editForm.address"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "edit-user-address",
+                        type: "text",
+                        name: "address"
+                      },
+                      domProps: { value: _vm.editForm.address },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.update($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.editForm, "address", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Post Code")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editForm.post_code,
+                          expression: "editForm.post_code"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "edit-user-post-code",
+                        type: "text",
+                        name: "post_code"
+                      },
+                      domProps: { value: _vm.editForm.post_code },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.update($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editForm,
+                            "post_code",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Phone Number")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editForm.contact_phone_number,
+                          expression: "editForm.contact_phone_number"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "edit-user-phone-number",
+                        name: "contact_phone_number"
+                      },
+                      domProps: { value: _vm.editForm.contact_phone_number },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.update($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editForm,
+                            "contact_phone_number",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Email")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editForm.email,
+                          expression: "editForm.email"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "edit-user-email",
+                        name: "email"
+                      },
+                      domProps: { value: _vm.editForm.email },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.update($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.editForm, "email", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Username")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editForm.username,
+                          expression: "editForm.username"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "edit-user-username",
+                        name: "username"
+                      },
+                      domProps: { value: _vm.editForm.username },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.update($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editForm,
+                            "username",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Password")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editForm.password,
+                          expression: "editForm.password"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "password",
+                        id: "edit-user-password",
+                        name: "password"
+                      },
+                      domProps: { value: _vm.editForm.password },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.update($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editForm,
+                            "password",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Password Confirm")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editForm.password_confirmation,
+                          expression: "editForm.password_confirmation"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "password",
+                        id: "edit-user-password-confirm",
+                        name: "password_confirmation"
+                      },
+                      domProps: { value: _vm.editForm.password_confirmation },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.update($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editForm,
+                            "password_confirmation",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
                   ])
                 ])
               ])
@@ -53725,8 +54245,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/may/sites/users-vue/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/may/sites/users-vue/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/may/sites/users/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/may/sites/users/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

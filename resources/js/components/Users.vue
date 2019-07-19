@@ -13,19 +13,19 @@
                         Users
                     </span>
 
-                    <a class="action-link" tabindex="-1" @click="showCreateClientForm">
+                    <a class="action-link" tabindex="-1" @click="showCreateUserForm">
                         Create New User
                     </a>
                 </div>
             </div>
 
             <div class="card-body">
-                <!-- Current Clients -->
-                <p class="mb-0" v-if="clients.length === 0">
+                <!-- Current Users -->
+                <p class="mb-0" v-if="users.length === 0">
                     No user data to display at the moment.
                 </p>
 
-                <table class="table table-borderless mb-0" v-if="clients.length > 0">
+                <table class="table table-borderless mb-0" v-if="users.length > 0">
                     <thead>
                     <tr>
                         <th>Name</th>
@@ -40,32 +40,40 @@
                     </thead>
 
                     <tbody>
-                    <tr v-for="client in clients">
+                    <tr v-for="user in users">
                         <!-- ID -->
                         <td style="vertical-align: middle;">
-                            {{ client.id }}
+                            {{ user.id }}
                         </td>
 
                         <!-- Name -->
                         <td style="vertical-align: middle;">
-                            {{ client.name }}
+                            {{ user.first_name }} {{ user.last_name }}
                         </td>
 
-                        <!-- Secret -->
                         <td style="vertical-align: middle;">
-                            <code>{{ client.secret }}</code>
+                            {{ user.post_code }}
+                        </td>
+                        <td style="vertical-align: middle;">
+                            {{ user.contact_phone_number }}
+                        </td>
+                        <td style="vertical-align: middle;">
+                            {{ user.email }}
+                        </td>
+                        <td style="vertical-align: middle;">
+                            {{ user.username }}
                         </td>
 
                         <!-- Edit Button -->
                         <td style="vertical-align: middle;">
-                            <a class="action-link" tabindex="-1" @click="edit(client)">
+                            <a class="action-link" tabindex="-1" @click="edit(user)">
                                 Edit
                             </a>
                         </td>
 
                         <!-- Delete Button -->
                         <td style="vertical-align: middle;">
-                            <a class="action-link text-danger" @click="destroy(client)">
+                            <a class="action-link text-danger" @click="destroy(user)">
                                 Delete
                             </a>
                         </td>
@@ -76,7 +84,7 @@
         </div>
 
         <!-- Create Client Modal -->
-        <div class="modal fade" id="modal-create-client" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modal-create-user" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -154,8 +162,8 @@
 
                                 <div class="col-md-9">
                                     <input type="text" id="create-user-phone-number" class="form-control"
-                                           name="phone-number"
-                                           @keyup.enter="store" v-model="createForm.phone_number">
+                                           name="contact_phone_number"
+                                           @keyup.enter="store" v-model="createForm.contact_phone_number">
 
                                 </div>
                             </div>
@@ -187,7 +195,7 @@
                                 <label class="col-md-3 col-form-label">Password</label>
 
                                 <div class="col-md-9">
-                                    <input type="text" id="create-user-password" class="form-control"
+                                    <input type="password" id="create-user-password" class="form-control"
                                            name="password"
                                            @keyup.enter="store" v-model="createForm.password">
 
@@ -198,9 +206,9 @@
                                 <label class="col-md-3 col-form-label">Password Confirm</label>
 
                                 <div class="col-md-9">
-                                    <input type="text" id="create-user-password-confirm" class="form-control"
+                                    <input type="password" id="create-user-password-confirm" class="form-control"
                                            name="password_confirmation"
-                                           @keyup.enter="store" v-model="createForm.password_confirm">
+                                           @keyup.enter="store" v-model="createForm.password_confirmation">
 
                                 </div>
                             </div>
@@ -220,7 +228,7 @@
         </div>
 
         <!-- Edit Client Modal -->
-        <div class="modal fade" id="modal-edit-client" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modal-edit-user" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -245,31 +253,107 @@
 
                         <!-- Edit Client Form -->
                         <form role="form">
-                            <!-- Name -->
+                            <!-- First Name -->
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label">Name</label>
+                                <label class="col-md-3 col-form-label">First Name</label>
 
                                 <div class="col-md-9">
-                                    <input id="edit-client-name" type="text" class="form-control"
-                                           @keyup.enter="update" v-model="editForm.name">
+                                    <input id="edit-user-first-name" type="text" class="form-control"
+                                           name="first_name"
+                                           @keyup.enter="update" v-model="editForm.first_name">
 
-                                    <span class="form-text text-muted">
-                                        Something your users will recognize and trust.
-                                    </span>
+                                </div>
+                            </div>
+                            <!-- Last Name -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Last Name</label>
+
+                                <div class="col-md-9">
+                                    <input id="edit-user-last-name" type="text" class="form-control"
+                                           name="last_name"
+                                           @keyup.enter="update" v-model="editForm.last_name">
+
                                 </div>
                             </div>
 
-                            <!-- Redirect URL -->
+                            <!-- Address -->
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label">Redirect URL</label>
+                                <label class="col-md-3 col-form-label">Address</label>
 
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="redirect"
-                                           @keyup.enter="update" v-model="editForm.redirect">
+                                    <input id="edit-user-address" type="text" class="form-control"
+                                           name="address"
+                                           @keyup.enter="update" v-model="editForm.address">
 
-                                    <span class="form-text text-muted">
-                                        Your application's authorization callback URL.
-                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Post Code -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Post Code</label>
+
+                                <div class="col-md-9">
+                                    <input id="edit-user-post-code" type="text" class="form-control"
+                                           name="post_code"
+                                           @keyup.enter="update" v-model="editForm.post_code">
+
+                                </div>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Phone Number</label>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="edit-user-phone-number" class="form-control"
+                                           name="contact_phone_number"
+                                           @keyup.enter="update" v-model="editForm.contact_phone_number">
+
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Email</label>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="edit-user-email" class="form-control"
+                                           name="email"
+                                           @keyup.enter="update" v-model="editForm.email">
+
+                                </div>
+                            </div>
+                            <!-- Username -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Username</label>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="edit-user-username" class="form-control"
+                                           name="username"
+                                           @keyup.enter="update" v-model="editForm.username">
+
+                                </div>
+                            </div>
+                            <!-- Password -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Password</label>
+
+                                <div class="col-md-9">
+                                    <input type="password" id="edit-user-password" class="form-control"
+                                           name="password"
+                                           @keyup.enter="update" v-model="editForm.password">
+
+                                </div>
+                            </div>
+                            <!-- Password -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Password Confirm</label>
+
+                                <div class="col-md-9">
+                                    <input type="password" id="edit-user-password-confirm" class="form-control"
+                                           name="password_confirmation"
+                                           @keyup.enter="update" v-model="editForm.password_confirmation">
+
                                 </div>
                             </div>
                         </form>
@@ -290,24 +374,54 @@
 </template>
 
 <script>
+    function initialState() {
+        return {
+            errors: [],
+            first_name: '',
+            last_name: '',
+            address: '',
+            post_code: '',
+            contact_phone_number: '',
+            email: '',
+            username: '',
+            password: '',
+            password_confirmation: ''
+        };
+    }
+
     export default {
         /*
          * The component's data.
          */
         data() {
             return {
-                clients: [],
+                users: [],
 
                 createForm: {
                     errors: [],
-                    name: '',
-                    redirect: ''
+                    first_name: '',
+                    last_name: '',
+                    address: '',
+                    post_code: '',
+                    contact_phone_number: '',
+                    email: '',
+                    username: '',
+                    password: '',
+                    password_confirmation: ''
                 },
 
                 editForm: {
                     errors: [],
-                    name: '',
-                    redirect: ''
+                    id: '',
+                    first_name: '',
+                    last_name: '',
+                    address: '',
+                    post_code: '',
+                    contact_phone_number: '',
+                    email: '',
+                    username: '',
+                    password: '',
+                    password_confirmation: ''
                 }
             };
         },
@@ -331,13 +445,13 @@
              * Prepare the component.
              */
             prepareComponent() {
-                this.getClients();
+                this.getUsers();
 
-                $('#modal-create-client').on('shown.bs.modal', () => {
+                $('#modal-create-user').on('shown.bs.modal', () => {
                     $('#create-client-name').focus();
                 });
 
-                $('#modal-edit-client').on('shown.bs.modal', () => {
+                $('#modal-edit-user').on('shown.bs.modal', () => {
                     $('#edit-client-name').focus();
                 });
             },
@@ -345,63 +459,76 @@
             /**
              * Get all of the OAuth clients for the user.
              */
-            getClients() {
-                axios.get('/oauth/clients')
+            getUsers() {
+                axios.get('/api/users')
                     .then(response => {
-                        this.clients = response.data;
+                        this.users = response.data;
                     });
             },
 
             /**
              * Show the form for creating new clients.
              */
-            showCreateClientForm() {
-                $('#modal-create-client').modal('show');
+            showCreateUserForm() {
+                $('#modal-create-user').modal('show');
             },
 
             /**
              * Create a new OAuth client for the user.
              */
             store() {
-                this.persistClient(
-                    'post', '/oauth/clients',
-                    this.createForm, '#modal-create-client'
+                this.persistUser(
+                    'post', '/api/users',
+                    this.createForm, '#modal-create-user'
                 );
             },
 
             /**
              * Edit the given client.
              */
-            edit(client) {
-                this.editForm.id = client.id;
-                this.editForm.name = client.name;
-                this.editForm.redirect = client.redirect;
+            edit(user) {
+                this.editForm.id = user.id;
+                this.editForm.first_name = user.first_name;
+                this.editForm.last_name = user.last_name;
+                this.editForm.address = user.address;
+                this.editForm.post_code = user.post_code;
+                this.editForm.contact_phone_number = user.contact_phone_number;
+                this.editForm.email = user.email;
+                this.editForm.username = user.username;
+                this.editForm.password = user.password;
 
-                $('#modal-edit-client').modal('show');
+                $('#modal-edit-user').modal('show');
             },
 
             /**
              * Update the client being edited.
              */
             update() {
-                this.persistClient(
-                    'put', '/oauth/clients/' + this.editForm.id,
-                    this.editForm, '#modal-edit-client'
+                this.persistUser(
+                    'put', '/api/users/' + this.editForm.id + '/update',
+                    this.editForm, '#modal-edit-user'
                 );
             },
 
             /**
              * Persist the client to storage using the given form.
              */
-            persistClient(method, uri, form, modal) {
+            persistUser(method, uri, form, modal) {
                 form.errors = [];
 
                 axios[method](uri, form)
                     .then(response => {
-                        this.getClients();
+                        this.getUsers();
 
-                        form.name = '';
-                        form.redirect = '';
+                        form.first_name = '';
+                        form.last_name = '';
+                        form.address = '';
+                        form.post_code = '';
+                        form.contact_phone_number = '';
+                        form.email = '';
+                        form.username = '';
+                        form.password = '';
+                        form.password_confirmation = '';
                         form.errors = [];
 
                         $(modal).modal('hide');
@@ -418,10 +545,10 @@
             /**
              * Destroy the given client.
              */
-            destroy(client) {
-                axios.delete('/oauth/clients/' + client.id)
+            destroy(user) {
+                axios.delete('/api/users/' + user.id + '/delete')
                     .then(response => {
-                        this.getClients();
+                        this.getUsers();
                     });
             }
         }

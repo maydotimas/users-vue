@@ -3,29 +3,46 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\User;
-use Faker\Factory as Faker;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+
+/**
+ * Post
+ *
+ * @mixin Eloquent
+ */
 
 class UserController extends Controller
 {
-
-    public function store(Request $request)
+    public function get_user_list()
     {
-        $user = new User();
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->address = $request->address;
-        $user->post_code = $request->post_code;
-        $user->contact_phone_number = $request->contact_phone_number;
-        $user->password = $request->password;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->save();
+        $users = User::all();
+        return response(json_encode($users), 200);
+    }
 
-        return response( $user, 200)
-            ->header('Content-Type', 'text/plain');
+    public function store(CreateUserRequest $request)
+    {
+        return User::create($request->all(), 200);
+    }
+
+    public function edit(UpdateUserRequest $request, $id)
+    {
+        $user = User::find($id);
+        if(!$user){
+            return response('User not found', 200);
+        }else{
+            $user->update($request->all());
+            return response('User updated', 200);
+        }
+    }
+    public function delete($id){
+        $user = User::find($id);
+        if(!$user){
+            return response('User not found', 200);
+        }else{
+            $user->delete();
+            return response('User deleted', 200);
+        }
     }
 }

@@ -5,29 +5,38 @@ namespace Tests\Unit;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
     use WithoutMiddleware;
 
+    protected $data = [];
+    protected $password = '';
+
+    protected $structure = [
+        "id",
+        "first_name",
+        "last_name",
+        "address",
+        "post_code",
+        "contact_phone_number",
+        "username",
+        "email",
+        "email_verified_at",
+        "created_at",
+        "updated_at"
+
+    ];
+
+
     public function setUp()
     {
         parent::setUp();
         Session::start();
-    }
 
-    /** @test */
-    public function can_enlist_users(){
-        $this->post(get('users.list'))
-            ->assertStatus(200);
-    }
+        $this->password = $this->faker->password;
 
-    /** @test */
-    public function can_create_a_user()
-    {
-        $data = [
+        $this->data = [
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'address' => $this->faker->address,
@@ -35,20 +44,35 @@ class UserTest extends TestCase
             'contact_phone_number' => $this->faker->phoneNumber,
             'username' => $this->faker->userName,
             'email' => $this->faker->freeEmail,
-            'password' => $this->faker->password
+            'password' => $this->password,
+            'password_confirmation' => $this->password
         ];
 
-        $this->post(route('users.store'), $data)
-            ->assertStatus(200);
     }
 
     /** @test */
-    public function can_update_a_user(){
+    public function can_enlist_users()
+    {
+        $this->get(route('users.list'))
+            ->assertStatus(201);
+    }
+
+    /** @test */
+    public function can_create_a_user()
+    {
+        $this->post(route('users.store'), $this->data)
+            ->assertStatus(201);
+    }
+
+    /** @test */
+    public function can_update_a_user()
+    {
         $this->assertTrue(true);
     }
 
     /** @test */
-    public function can_delete_a_user(){
+    public function can_delete_a_user()
+    {
         $this->assertTrue(true);
     }
 }
