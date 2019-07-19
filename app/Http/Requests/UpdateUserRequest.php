@@ -32,8 +32,8 @@ class UpdateUserRequest extends FormRequest
             'post_code' => 'required|max:10',
             'contact_phone_number' => 'required|max:20',
             'password' => 'confirmed',
-            'email' => 'required|unique:users,email,'.$id,
-            'username' => 'required|unique:users,username,'.$id
+            'email' => 'required|unique:users,email,' . $id,
+            'username' => 'required|unique:users,username,' . $id
         ];
     }
 }
