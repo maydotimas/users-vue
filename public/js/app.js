@@ -2321,6 +2321,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         form.password = '';
         form.password_confirmation = '';
         form.errors = [];
+        form.errors.clear();
         $(modal).modal('hide');
       })["catch"](function (error) {
         if (_typeof(error.response.data) === 'object') {

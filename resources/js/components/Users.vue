@@ -576,6 +576,7 @@
                         form.password = '';
                         form.password_confirmation = '';
                         form.errors = [];
+                        form.errors.clear()
 
                         $(modal).modal('hide');
                     })
