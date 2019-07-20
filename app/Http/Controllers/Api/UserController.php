@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Repositories\UserRepository;
+use App\Repositories\UserRepositoryInterface;
 use App\User;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,43 +17,41 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserController extends Controller
 {
+
+    protected $user;
+
+    public function __construct(UserRepository $user)
+    {
+        $this->user = $user;
+    }
+
     public function get_user_list()
     {
-        $users = User::all();
+        $users = $this->user->all();
         return response(json_encode($users), 200);
     }
 
     public function store(CreateUserRequest $request)
     {
-        return User::create($request->all(), 200);
+        $result = $this->user->store($request->all());
+        return response(json_encode($result), 200);
     }
 
     public function edit(UpdateUserRequest $request, $id)
     {
-        $user = User::find($id);
-        if (!$user) {
-            return response('User not found', 200);
-        } else {
-            $user->update($request->all());
-            return response('User updated', 200);
-        }
+        $result = $this->user->update($id, $request->all());
+        return response(json_encode($result), 200);
     }
 
     public function delete($id)
     {
-        $user = User::find($id);
-        if (!$user) {
-            return response('User not found', 200);
-        } else {
-            $user->delete();
-            return response('User deleted', 200);
-        }
+        $result = $this->user->delete($id);
+        return response(json_encode($result), 200);
     }
 
     public function multiple_delete(Request $request)
     {
-        $ids = array_flatten($request->all());
-        User::destroy($ids);
-        return response('User deleted', 200);
+        $result = $this->user->delete($request->all());
+        return response(json_encode($result), 200);
     }
 }
