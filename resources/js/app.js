@@ -7,7 +7,11 @@
 
 require('./bootstrap');
 
+import VeeValidate from 'vee-validate';
+
 window.Vue = require('vue');
+
+Vue.use(VeeValidate);
 
 /**
  * The following block of code may be used to automatically register your

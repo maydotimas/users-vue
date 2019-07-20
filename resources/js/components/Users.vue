@@ -91,7 +91,7 @@
 
         <button class="btn btn-primary mt-10" @click="destroy_multiple">Delete</button>
 
-        <!-- Create Client Modal -->
+        <!-- Create User Modal -->
         <div class="modal fade" id="modal-create-user" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -122,9 +122,12 @@
                                 <label class="col-md-3 col-form-label">First Name</label>
 
                                 <div class="col-md-9">
-                                    <input id="create-user-first-name" type="text" class="form-control"
-                                           name="first_name"
+                                    <input id="create-user-first-name" type="text"
+                                           class="form-control"
+                                           name="first_name" v-validate="'required|alpha_spaces'"
                                            @keyup.enter="store" v-model="createForm.first_name">
+                                    <i v-show="errors.has('first_name')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('first_name')" class="help is-danger">{{ errors.first('first_name') }}</span>
 
                                 </div>
                             </div>
@@ -134,8 +137,10 @@
 
                                 <div class="col-md-9">
                                     <input id="create-user-last-name" type="text" class="form-control"
-                                           name="last_name"
+                                           name="last_name" v-validate="'required|alpha_spaces'"
                                            @keyup.enter="store" v-model="createForm.last_name">
+                                    <i v-show="errors.has('last_name')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('last_name')" class="help is-danger">{{ errors.first('last_name') }}</span>
 
                                 </div>
                             </div>
@@ -146,8 +151,10 @@
 
                                 <div class="col-md-9">
                                     <input id="create-user-address" type="text" class="form-control"
-                                           name="address"
+                                           name="address" v-validate="'required'"
                                            @keyup.enter="store" v-model="createForm.address">
+                                    <i v-show="errors.has('address')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('address')" class="help is-danger">{{ errors.first('address') }}</span>
 
                                 </div>
                             </div>
@@ -158,8 +165,13 @@
 
                                 <div class="col-md-9">
                                     <input id="create-user-post-code" type="text" class="form-control"
-                                           name="post_code"
-                                           @keyup.enter="store" v-model="createForm.post_code">
+                                           name="post_code" v-validate="'required|alpha_num'"
+                                           @keyup.enter="store" v-model="createForm.post_code"
+                                           max="10"
+                                    >
+
+                                    <i v-show="errors.has('post_code')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('post_code')" class="help is-danger">{{ errors.first('post_code') }}</span>
 
                                 </div>
                             </div>
@@ -170,8 +182,11 @@
 
                                 <div class="col-md-9">
                                     <input type="text" id="create-user-phone-number" class="form-control"
-                                           name="contact_phone_number"
+                                           name="contact_phone_number" v-validate="'required|numeric'"
                                            @keyup.enter="store" v-model="createForm.contact_phone_number">
+
+                                    <i v-show="errors.has('contact_phone_number')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('contact_phone_number')" class="help is-danger">{{ errors.first('contact_phone_number') }}</span>
 
                                 </div>
                             </div>
@@ -182,8 +197,12 @@
 
                                 <div class="col-md-9">
                                     <input type="text" id="create-user-email" class="form-control"
-                                           name="email"
+                                           name="email" v-validate="'required|email'"
                                            @keyup.enter="store" v-model="createForm.email">
+
+                                    <i v-show="errors.has('email')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+
 
                                 </div>
                             </div>
@@ -193,8 +212,11 @@
 
                                 <div class="col-md-9">
                                     <input type="text" id="create-user-username" class="form-control"
-                                           name="username"
+                                           name="username" v-validate="'required|alpha_num'"
                                            @keyup.enter="store" v-model="createForm.username">
+
+                                    <i v-show="errors.has('username')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>
 
                                 </div>
                             </div>
@@ -204,8 +226,10 @@
 
                                 <div class="col-md-9">
                                     <input type="password" id="create-user-password" class="form-control"
-                                           name="password"
+                                           name="password" v-validate="'required'"
                                            @keyup.enter="store" v-model="createForm.password">
+
+                                    <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
 
                                 </div>
                             </div>
@@ -215,8 +239,10 @@
 
                                 <div class="col-md-9">
                                     <input type="password" id="create-user-password-confirm" class="form-control"
-                                           name="password_confirmation"
+                                           name="password_confirmation" v-validate="'required|confirmed:password'"
                                            @keyup.enter="store" v-model="createForm.password_confirmation">
+
+                                    <span v-show="errors.has('password_confirmation')" class="help is-danger">{{ errors.first('password_confirmation') }}</span>
 
                                 </div>
                             </div>
@@ -235,7 +261,7 @@
             </div>
         </div>
 
-        <!-- Edit Client Modal -->
+        <!-- Edit User Modal -->
         <div class="modal fade" id="modal-edit-user" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -266,9 +292,12 @@
                                 <label class="col-md-3 col-form-label">First Name</label>
 
                                 <div class="col-md-9">
-                                    <input id="edit-user-first-name" type="text" class="form-control"
-                                           name="first_name"
-                                           @keyup.enter="update" v-model="editForm.first_name">
+                                    <input id="edit-user-first-name" type="text"
+                                           class="form-control"
+                                           name="first_name" v-validate="'required|alpha_spaces'"
+                                           @keyup.enter="store" v-model="editForm.first_name">
+                                    <i v-show="errors.has('first_name')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('first_name')" class="help is-danger">{{ errors.first('first_name') }}</span>
 
                                 </div>
                             </div>
@@ -278,8 +307,10 @@
 
                                 <div class="col-md-9">
                                     <input id="edit-user-last-name" type="text" class="form-control"
-                                           name="last_name"
-                                           @keyup.enter="update" v-model="editForm.last_name">
+                                           name="last_name" v-validate="'required|alpha_spaces'"
+                                           @keyup.enter="store" v-model="editForm.last_name">
+                                    <i v-show="errors.has('last_name')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('last_name')" class="help is-danger">{{ errors.first('last_name') }}</span>
 
                                 </div>
                             </div>
@@ -290,8 +321,10 @@
 
                                 <div class="col-md-9">
                                     <input id="edit-user-address" type="text" class="form-control"
-                                           name="address"
-                                           @keyup.enter="update" v-model="editForm.address">
+                                           name="address" v-validate="'required'"
+                                           @keyup.enter="store" v-model="editForm.address">
+                                    <i v-show="errors.has('address')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('address')" class="help is-danger">{{ errors.first('address') }}</span>
 
                                 </div>
                             </div>
@@ -302,8 +335,13 @@
 
                                 <div class="col-md-9">
                                     <input id="edit-user-post-code" type="text" class="form-control"
-                                           name="post_code"
-                                           @keyup.enter="update" v-model="editForm.post_code">
+                                           name="post_code" v-validate="'required|alpha_num'"
+                                           @keyup.enter="store" v-model="editForm.post_code"
+                                           max="10"
+                                    >
+
+                                    <i v-show="errors.has('post_code')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('post_code')" class="help is-danger">{{ errors.first('post_code') }}</span>
 
                                 </div>
                             </div>
@@ -314,8 +352,11 @@
 
                                 <div class="col-md-9">
                                     <input type="text" id="edit-user-phone-number" class="form-control"
-                                           name="contact_phone_number"
-                                           @keyup.enter="update" v-model="editForm.contact_phone_number">
+                                           name="contact_phone_number" v-validate="'required|numeric'"
+                                           @keyup.enter="store" v-model="editForm.contact_phone_number">
+
+                                    <i v-show="errors.has('contact_phone_number')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('contact_phone_number')" class="help is-danger">{{ errors.first('contact_phone_number') }}</span>
 
                                 </div>
                             </div>
@@ -326,8 +367,12 @@
 
                                 <div class="col-md-9">
                                     <input type="text" id="edit-user-email" class="form-control"
-                                           name="email"
-                                           @keyup.enter="update" v-model="editForm.email">
+                                           name="email" v-validate="'required|email'"
+                                           @keyup.enter="store" v-model="editForm.email">
+
+                                    <i v-show="errors.has('email')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+
 
                                 </div>
                             </div>
@@ -337,8 +382,11 @@
 
                                 <div class="col-md-9">
                                     <input type="text" id="edit-user-username" class="form-control"
-                                           name="username"
-                                           @keyup.enter="update" v-model="editForm.username">
+                                           name="username" v-validate="'required|alpha_num'"
+                                           @keyup.enter="store" v-model="editForm.username">
+
+                                    <i v-show="errors.has('username')" class="fa fa-warning"></i>
+                                    <span v-show="errors.has('username')" class="help is-danger">{{ errors.first('username') }}</span>
 
                                 </div>
                             </div>
@@ -349,7 +397,7 @@
                                 <div class="col-md-9">
                                     <input type="password" id="edit-user-password" class="form-control"
                                            name="password"
-                                           @keyup.enter="update" v-model="editForm.password">
+                                           @keyup.enter="store" v-model="editForm.password">
 
                                 </div>
                             </div>
@@ -359,8 +407,10 @@
 
                                 <div class="col-md-9">
                                     <input type="password" id="edit-user-password-confirm" class="form-control"
-                                           name="password_confirmation"
-                                           @keyup.enter="update" v-model="editForm.password_confirmation">
+                                           name="password_confirmation" v-validate="'confirmed:password'"
+                                           @keyup.enter="store" v-model="editForm.password_confirmation">
+
+                                    <span v-show="errors.has('password_confirmation')" class="help is-danger">{{ errors.first('password_confirmation') }}</span>
 
                                 </div>
                             </div>
@@ -390,7 +440,7 @@
         data() {
             return {
                 users: [],
-                selected_users:[],
+                selected_users: [],
 
                 createForm: {
                     errors: [],
@@ -553,7 +603,7 @@
              */
             destroy_multiple() {
                 axios.delete('/api/users/multiple-delete',
-                    { data: { ids: this.selected_users} })
+                    {data: {ids: this.selected_users}})
                     .then(response => {
                         this.getUsers();
                     });
